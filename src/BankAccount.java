@@ -19,7 +19,10 @@ public class BankAccount {
     }
 
     public int getAccountNumber() {
-        return accountNumber;
+        return this.accountNumber;
+    }
+    public float getBalance() {
+        return this.balance;
     }
 
     public boolean deposit(float amount) {
@@ -42,13 +45,12 @@ public class BankAccount {
         System.out.println(this.balance);
     }
 
-    public void transferAmount(float amount, BankAccount other) {
+    public boolean transferAmount(float amount, BankAccount other) {
         if (this.withdraw(amount)) {
             other.deposit(amount);
+            return true;
         }
+        return false;
     }
 
-    public static void main(String[] args) {
-
-    }
 }
