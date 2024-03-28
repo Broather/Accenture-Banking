@@ -5,8 +5,8 @@ public class BankAccount {
     private int accountNumber;
     private float balance;
 
-    BankAccount() {
-        this.accountNumber = -1;
+    BankAccount(int accountNumber) {
+        this.accountNumber = accountNumber;
         this.balance = 0f;
     }
 
@@ -31,7 +31,7 @@ public class BankAccount {
     }
 
     public boolean withdraw(float amount) {
-        if (amount < 0 && amount <= this.balance) {
+        if (amount < 0 || amount > this.balance) {
             return false;
         }
         this.balance -= amount;
