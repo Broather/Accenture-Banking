@@ -2,17 +2,24 @@
  * a bank account class that stores information about how much money it contains
  */
 public class BankAccount {
+    private int accountNumber;
     private float balance;
 
     BankAccount() {
+        this.accountNumber = -1;
         this.balance = 0f;
     }
 
-    BankAccount(float balance) {
+    BankAccount(int accountNumber, float balance) {
+        this.accountNumber = accountNumber;
         if (balance < 0) {
             System.out.println("Can't create an account with a negative balance");
         }
         this.balance = balance;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
     }
 
     public boolean deposit(float amount) {
@@ -42,10 +49,6 @@ public class BankAccount {
     }
 
     public static void main(String[] args) {
-        BankAccount b1 = new BankAccount(100f);
-        BankAccount b2 = new BankAccount(0f);
-        b1.transferAmount(50f, b2);
-        b1.printBalance();
-        b2.printBalance();
+
     }
 }
