@@ -2,7 +2,7 @@
  * a bank account class that stores information about how much money it contains
  */
 public class BankAccount {
-    private int accountNumber;
+    private final int accountNumber;
     private float balance;
 
     BankAccount(int accountNumber) {
@@ -16,6 +16,10 @@ public class BankAccount {
             System.out.println("Can't create an account with a negative balance");
         }
         this.balance = balance;
+    }
+    @Override
+    public String toString(){
+        return String.format("%d", this.accountNumber);
     }
 
     public int getAccountNumber() {
