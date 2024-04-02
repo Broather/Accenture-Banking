@@ -25,6 +25,9 @@ public class BankAccount {
     public int getAccountNumber() {
         return this.accountNumber;
     }
+    public float getBalance() {
+        return this.balance;
+    }
 
     public boolean deposit(float amount) {
         if (amount < 0) {
