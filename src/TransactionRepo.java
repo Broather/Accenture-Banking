@@ -1,11 +1,15 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class TransactionRepo {
-    private final String ANSI_RESET = "\u001B[0m";
-    private final String ANSI_GREEN = "\u001B[32m";
+    private static final Logger logger = LogManager.getLogger(TransactionRepo.class);
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_GREEN = "\u001B[32m";
     private final String fileName;
     public ArrayList<Transaction> allTransactions = new ArrayList<>();
 
@@ -51,27 +55,26 @@ public class TransactionRepo {
             while ((line = reader.readLine()) != null) {
                 this.add(line);
             }
-            System.out.printf("%s%s.txt successfully loaded%s%n", ANSI_GREEN, this.fileName, ANSI_RESET);
+            logger.info(String.format("%s%s.txt successfully loaded%s%n", ANSI_GREEN, this.fileName, ANSI_RESET));
         } catch (FileNotFoundException e) {
-            System.out.printf("Couldn't find %s.txt, creating...%n", this.fileName);
+            logger.info(String.format("Couldn't find %s.txt, creating...%n", this.fileName));
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + ".txt"))) {
                 writer.write("");
-                System.out.printf("%s%s.txt successfully created%s%n", ANSI_GREEN, this.fileName, ANSI_RESET);
-
+                logger.info(String.format("%s%s.txt successfully created%s%n", ANSI_GREEN, this.fileName, ANSI_RESET));
             } catch (IOException ex) {
-                System.err.println("Error creating file: " + e.getMessage());
+                logger.error(String.format("Error creating file: " + e.getMessage()));
             }
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+            logger.error("Error reading file: " + e.getMessage());
         }
     }
 
     public void saveTransactions() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileName + ".txt"))) {
             writer.write(allTransactions.stream().map(Transaction::toString).collect(Collectors.joining("\n")));
-            System.out.printf("%s%s.txt successfully saved%s%n", ANSI_GREEN, this.fileName, ANSI_RESET);
+            logger.info(String.format("%s%s.txt successfully saved%s%n", ANSI_GREEN, this.fileName, ANSI_RESET));
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            logger.error(String.format("Error writing to file: " + e.getMessage()));
         }
 
     }

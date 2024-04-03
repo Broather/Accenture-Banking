@@ -1,16 +1,21 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.awt.image.PackedColorModel;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BankAccountTest {
 
-    BankAccount wealthyIndividual = new BankAccount(1000, 10000f);
-    BankAccount emptyIndividual = new BankAccount(2000);
+    BankAccount wealthyIndividual;
+    BankAccount emptyIndividual;
+    @BeforeEach
+    void setUp(){
+        wealthyIndividual = new BankAccount(1000, 10000f);
+        emptyIndividual = new BankAccount(2000);
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {5, 10, 21, 1})
     void depositWithNonNegativeIntegers(int amount) {

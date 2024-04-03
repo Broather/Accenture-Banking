@@ -1,10 +1,15 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Demo {
-    private static final String ANSI_RESET = "\u001B[0m";
+    private static final Logger logger = LogManager.getLogger(Demo.class);
+    private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_RESET = "\u001B[0m";
 
     public static void main(String[] args) {
         TransactionRepo transactionRepo = new TransactionRepo("transactions");
@@ -22,7 +27,7 @@ public class Demo {
                 System.out.printf("There is no account with account number %d, would you like to create one [Y/N]: ", accountNumber);
                 boolean _continue = scanner.next().equalsIgnoreCase("Y");
                 if (_continue && accountRepo.add(accountNumber)) {
-                    System.out.println("Account successfully created!");
+                    logger.info(String.format("%sAccount successfully created!%s%n", ANSI_GREEN, ANSI_RESET));
                 }
             }
             BankAccount myAccount;
@@ -99,8 +104,7 @@ public class Demo {
                         return;
 
                     default:
-                        System.out.printf("Unrecognised choice: %d", choice);
-
+                        logger.warn(String.format("Unrecognised choice: %d", choice));
                 }
             } while (logged_in);
         } while (true);
